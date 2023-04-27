@@ -2,14 +2,10 @@ from excel_methods import *
 import yaml
 import ctypes
 
-
-
 ### We need to take the data from the form, and save it in a YAML file. 
- 
+
 ### Then, with the YAML files, we can easily retrieve the information
 ### to generate different types of reporting (weekly, monthly)
-
-
 
 def on_error(message):
     ctypes.windll.user32.MessageBoxW(0, message, "Error",  0)
@@ -46,8 +42,17 @@ for file in file_list:
                            ]
         
         date = ws["I2"].value
-        date_obj = datetime(int(date[-4:]), int(date[3:5]), int(date[:2])) 
         
+        keep_going = True
+        
+        try:
+            date_obj = datetime(int(date[-4:]), int(date[:2]), int(date[3:5])) 
+        except ValueError:
+            on_error("Invalid Date")
+            keep_going = False
+            
+            
+            
         needs_to_be_string = ["F2", "B4", "B15", "B28"]
         needs_to_be_int = ["D4", "F4", "H4", "J4",
                            "B5", "B6",  
@@ -69,7 +74,7 @@ for file in file_list:
         isnt_string =       []
         empty =             []
         
-        keep_going = True
+        
         
         if "-" not in date:
             on_error("Invalid Date Format")

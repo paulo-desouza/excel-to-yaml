@@ -217,8 +217,8 @@ def date_conversion(date_string):
 
     rawdate = date_string.split(" ")[1]
     y = int('20'+rawdate[4:])
-    m = int(rawdate[0:2])
-    d = int(rawdate[2:4])
+    m = int(rawdate[2:4])
+    d = int(rawdate[0:2])
 
     return datetime(y, m, d)
 
